@@ -32,7 +32,7 @@ h4,
 h5,
 h6,
 p {
-  font-family: "Roboto";
+  font-family: inherit;
   font-style: normal;
   font-size: inherit;
   font-weight: 400;
@@ -49,13 +49,18 @@ img {
 }
 
 body {
-  margin: 0;
-  font-family: "Montserrat", sans-serif;
+  margin: 0 auto;
+  max-width: 1440px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 20px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-color: #e5e5e5;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
