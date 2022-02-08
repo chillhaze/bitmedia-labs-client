@@ -16,6 +16,7 @@ export const TableRowStyled = styled(TableRow)`
     color: ${props => props.theme.palette.text.white};
   }
 `;
+
 export const TableBodyStyled = styled(TableBody)`
   & td {
     max-width: ${props => props.theme.spacing(28)};
@@ -26,4 +27,16 @@ export const TableBodyStyled = styled(TableBody)`
     text-align: start;
     color: ${props => props.theme.palette.text.black};
   }
+`;
+export const NoData = styled.div`
+  min-height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${props => props.theme.palette.primary.main};
+`;
+export const NoDataTitle = styled.h2`
+  font-size: 24px;
+  line-height: 26px;
+  color: ${props => props.theme.palette.text.white};
 `;

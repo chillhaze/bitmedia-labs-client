@@ -1,19 +1,17 @@
-import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = "https://kapusta-app-teamproject.herokuapp.com/api";
+axios.defaults.baseURL = 'https://bitmedia-lab.herokuapp.com/api';
 
 export const getTransactions = createAsyncThunk(
-  "transactions/get-transactions",
-  async ({ type, period }) => {
+  'transactions/get-transactions',
+  async () => {
     try {
-      const { data } = await axios.get(
-        `/transactions?type=${type}&period=${period}`
-      );
+      const { data } = await axios.get(`/`);
       console.log(data);
       return data.data.result;
     } catch (error) {
       console.log(error.message);
     }
-  }
+  },
 );

@@ -23,11 +23,19 @@ export const PaperStyled = styled(Paper)`
 
 export const SearchWrapper = styled.div`
   display: flex;
+
+  @media (max-width: 750px) {
+    flex-direction: column;
+  }
 `;
 
 export const InputBaseStyled = styled(InputBase)`
   min-width: 230px;
   font-style: italic;
+
+  @media (max-width: 750px) {
+    min-width: 130px;
+  }
 `;
 
 export const SelectStyled = styled(Select)`
@@ -38,6 +46,10 @@ export const SelectStyled = styled(Select)`
 
   & svg {
     fill: ${props => props.theme.palette.primary.main};
+  }
+
+  @media (max-width: 750px) {
+    min-width: 90px;
   }
 `;
 
@@ -57,5 +69,9 @@ export const ButtonStyled = styled(Button)`
     & svg {
       fill: ${props => props.theme.palette.primary.main};
     }
+  }
+
+  @media (max-width: 750px) {
+    margin-top: 10px;
   }
 `;
