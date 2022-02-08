@@ -72,6 +72,7 @@ export const ButtonStyled = styled(Button)`
   }
 
   @media (max-width: 750px) {
-    margin-top: 10px;
+    margin-left: 0;
+    margin-top: ${props => props.theme.spacing(3)};
   }
 `;
