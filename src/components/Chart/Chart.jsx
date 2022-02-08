@@ -47,16 +47,7 @@ export default function Chart() {
             <Table size="small" aria-label="a dense table">
               <TableHeadStyled>
                 <TableRowStyled>
-                  <TableCell
-                  // style={{
-                  //   position: 'sticky',
-                  //   left: 0,
-                  //   zIndex: 1,
-                  //   background: '#fff',
-                  // }}
-                  >
-                    Block number
-                  </TableCell>
+                  <TableCell>Block number</TableCell>
                   <TableCell align="right">Transaction ID</TableCell>
                   <TableCell align="right">Sender address</TableCell>
                   <TableCell align="right">Recipient's address</TableCell>
@@ -68,26 +59,24 @@ export default function Chart() {
               </TableHeadStyled>
               <TableBodyStyled>
                 {transactions.map(
-                  ({ number, hash, from, transactions, timestamp, miner }) => (
+                  ({
+                    number,
+                    hash,
+                    from,
+                    transactions,
+                    timestamp,
+                    miner,
+                    _id,
+                  }) => (
                     <TableRow
-                      key={timestamp}
+                      key={_id}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                      <TableCell
-                        // style={{
-                        //   position: 'sticky',
-                        //   left: 0,
-                        //   zIndex: 1,
-                        //   background: '#fff',
-                        // }}
-                        scope="row"
-                      >
-                        {number}
-                      </TableCell>
+                      <TableCell scope="row">{number}</TableCell>
                       <TableCell align="right">
                         <a
-                          href="/"
-                          // href=`https://etherscan.io/tx/${hash}`
+                          // href="/"
+                          href={`https://etherscan.io/tx/${transactions[0].hash}`}
                         >
                           {truncate(hash, 12)}
                         </a>

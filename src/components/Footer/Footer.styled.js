@@ -6,8 +6,9 @@ export const Wrapper = styled.div`
 
   position: fixed;
   bottom: 0;
-  left: 0;
+
   width: 100%;
+  max-width: 1440px;
 `;
 export const TextWrapper = styled.div`
   padding: 14px 0;
