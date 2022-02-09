@@ -3,12 +3,12 @@ import styled from '@emotion/styled';
 export const Wrapper = styled.div`
   margin-top: ${props => props.theme.spacing(12)};
   background-color: ${props => props.theme.palette.secondary.main};
-
+  /* 
   position: fixed;
   bottom: 0;
 
   width: 100%;
-  max-width: 1440px;
+  max-width: 1440px; */
 `;
 export const TextWrapper = styled.div`
   padding: 14px 0;

@@ -14,29 +14,14 @@ export const theme = createTheme({
       black: '#000000',
       grey: '#F1F1F1',
       white: '#FFFFFF',
+      blue: '#3A80BA',
       red: '#E7192E',
       redText: '#EB5757',
     },
+    button: '#3A80BA',
   },
   spacing: val => `${4 * val}px`,
   typography: {
     fontFamily: ['Montserrat', 'sans-serif'].join(','),
   },
 });
-
-export const spacing = {
-  spacing: val => `${4 * val}px`,
-};
-
-// export const colors = {
-//   colors: {
-//     BgColor: '#FFFFFF',
-//     BgColorThemeLight: '#3A80BA',
-//     BgColorThemeDark: '#1C3B55',
-//     black: '#000000',
-//     white: '#FFFFFF',
-//     red: '#E7192E',
-//     redText: '#EB5757',
-//   },
-//   spacing: val => `${4 * val}px`,
-// };

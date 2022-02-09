@@ -54,9 +54,12 @@ export const SelectStyled = styled(Select)`
 `;
 
 export const ButtonStyled = styled(Button)`
+  min-width: 52px;
+  min-height: 48px;
   margin-left: ${props => props.theme.spacing(3)};
   background-color: ${props => props.theme.palette.primary.main};
   border-radius: 8px;
+  border: 1px solid transparent;
 
   & svg {
     fill: ${props => props.theme.palette.text.white};

@@ -3,8 +3,12 @@ import * as transactionsOperations from './transactions-operations.js';
 
 const initialState = {
   transactionsData: [],
+  count: 0,
   isLoadingTransactions: false,
   filterOption: '',
+  currentPage: 1,
+  itemsLimit: 14,
+  timestamp: null,
 };
 
 export const transactionsSlice = createSlice({
@@ -14,6 +18,12 @@ export const transactionsSlice = createSlice({
     setFilterOption: (state, action) => {
       state.filterOption = action.payload;
     },
+    setPageOption: (state, action) => {
+      state.currentPage = action.payload;
+    },
+    setLimitOption: (state, action) => {
+      state.itemsLimit = action.payload;
+    },
   },
   extraReducers: {
     //------------------ Get Transactions Data
@@ -21,10 +31,17 @@ export const transactionsSlice = createSlice({
       state.isLoadingTransactions = true;
     },
     [transactionsOperations.getTransactions.fulfilled](state, action) {
-      state.transactionsData = action.payload;
+      state.transactionsData = action.payload.result;
+      state.count = action.payload.count;
+      state.timestamp = action.payload.timestamp;
+      state.isLoadingTransactions = false;
+    },
+    [transactionsOperations.getTransactions.rejected](state, action) {
+      state.transactionsData = [];
       state.isLoadingTransactions = false;
     },
   },
 });
 
-export const { setFilterOption } = transactionsSlice.actions;
+export const { setFilterOption, setPageOption, setLimitOption } =
+  transactionsSlice.actions;

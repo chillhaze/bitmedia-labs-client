@@ -1,10 +1,15 @@
 import Container from 'components/Container/Container';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Table from '@mui/material/Table';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useDispatch, useSelector } from 'react-redux';
+import LoaderElement from 'components/LoaderElement/LoaderElement';
+import { useMediaQuery } from 'react-responsive';
+import ChartRow from '../ChartRow/ChartRow';
+import * as transactionsOperations from '../../redux/transactions/transactions-operations';
+import * as transactionsSelectors from '../../redux/transactions/transactions-selectors';
+import PaginationElement from 'components/PaginationElement/PaginationElement';
 import {
   Wrapper,
   TableHeadStyled,
@@ -12,94 +17,89 @@ import {
   TableBodyStyled,
   NoData,
   NoDataTitle,
+  TableCellStyled,
 } from './Chart.styled';
-import * as transactionsSelectors from '../../redux/transactions/transactions-selectors';
-import { useSelector } from 'react-redux';
-import LoaderElement from 'components/LoaderElement/LoaderElement';
-import { useMediaQuery } from 'react-responsive';
 
 export default function Chart() {
-  // const rows = null;
+  const isMobile = useMediaQuery({
+    query: '(max-width: 750px)',
+  });
+
+  const dispatch = useDispatch();
+  const currentPage = useSelector(transactionsSelectors.getCurrentPage);
+  const pageItemsLimit = useSelector(transactionsSelectors.getItemsLimit);
+
+  useEffect(() => {
+    // use for Server side pagination
+    // dispatch(transactionsOperations.getTransactions({ page, limit }));
+    dispatch(transactionsOperations.getTransactions());
+  }, [dispatch]);
+
   const transactions = useSelector(transactionsSelectors.getTransactionsData);
   const isLoadingData = useSelector(
     transactionsSelectors.isLoadingTransactions,
   );
 
-  const isMobile = useMediaQuery({
-    query: '(max-width: 750px)',
-  });
-
-  const truncate = (str, n) => {
-    if (isMobile) {
-      n = n / 2;
-    }
-
-    return str?.length > n ? str.substr(0, n - 1) + '...' : str;
-  };
+  const lastTransaction = currentPage * pageItemsLimit;
+  const firstTransaction = lastTransaction - pageItemsLimit;
+  const paginatedTransactions = transactions.slice(
+    firstTransaction,
+    lastTransaction,
+  );
 
   return (
     <Wrapper>
       <Container>
         <TableContainer component={Paper}>
           {isLoadingData && <LoaderElement />}
-
-          {transactions ? (
+          {!isLoadingData && transactions && (
             <Table size="small" aria-label="a dense table">
               <TableHeadStyled>
                 <TableRowStyled>
-                  <TableCell>Block number</TableCell>
-                  <TableCell align="right">Transaction ID</TableCell>
-                  <TableCell align="right">Sender address</TableCell>
-                  <TableCell align="right">Recipient's address</TableCell>
-                  <TableCell align="right">Block confirmations</TableCell>
-                  <TableCell align="right">Date</TableCell>
-                  <TableCell align="right">Value</TableCell>
-                  <TableCell align="right">Transaction Fee</TableCell>
+                  <TableCellStyled>Block number</TableCellStyled>
+                  <TableCellStyled align="right" style={{ minWidth: '165px' }}>
+                    Transaction ID
+                  </TableCellStyled>
+                  <TableCellStyled align="right">
+                    Sender address
+                  </TableCellStyled>
+                  <TableCellStyled align="right">
+                    Recipient's address
+                  </TableCellStyled>
+                  <TableCellStyled align="right">
+                    Block confirmations
+                  </TableCellStyled>
+                  <TableCellStyled align="right" style={{ minWidth: '130px' }}>
+                    Date
+                  </TableCellStyled>
+                  <TableCellStyled align="right" style={{ minWidth: '165px' }}>
+                    Value
+                  </TableCellStyled>
+                  <TableCellStyled align="right">
+                    Transaction Fee
+                  </TableCellStyled>
                 </TableRowStyled>
               </TableHeadStyled>
               <TableBodyStyled>
-                {transactions.map(
-                  ({
-                    number,
-                    hash,
-                    from,
-                    transactions,
-                    timestamp,
-                    miner,
-                    _id,
-                  }) => (
-                    <TableRow
-                      key={_id}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                      <TableCell scope="row">{number}</TableCell>
-                      <TableCell align="right">
-                        <a
-                          // href="/"
-                          href={`https://etherscan.io/tx/${transactions[0].hash}`}
-                        >
-                          {truncate(hash, 12)}
-                        </a>
-                      </TableCell>
-                      <TableCell align="right">{truncate(from, 14)}</TableCell>
-                      <TableCell align="right">
-                        {truncate(transactions[0].from, 14)}
-                      </TableCell>
-                      <TableCell align="right">{transactions.length}</TableCell>
-                      <TableCell align="right">{timestamp}</TableCell>
-                      <TableCell align="right">{miner}</TableCell>
-                      <TableCell align="right">{timestamp}</TableCell>
-                    </TableRow>
-                  ),
-                )}
+                {paginatedTransactions.map((item, index) => (
+                  <ChartRow
+                    key={index}
+                    transactions={paginatedTransactions}
+                    item={item}
+                    isMobile={isMobile}
+                  />
+                ))}
               </TableBodyStyled>
             </Table>
-          ) : (
+          )}
+          {!isLoadingData && !transactions && (
             <NoData>
               <NoDataTitle>No data</NoDataTitle>
             </NoData>
           )}
         </TableContainer>
+
+        <PaginationElement isMobile={isMobile} />
       </Container>
     </Wrapper>
   );
