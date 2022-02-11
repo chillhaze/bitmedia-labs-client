@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableBody from '@mui/material/TableBody';
@@ -22,12 +23,6 @@ export const TableCellStyled = styled(TableCell)`
   line-height: 20px;
   text-align: start;
   padding: ${props => props.theme.spacing(1)} ${props => props.theme.spacing(3)};
-
-  @media (max-width: 830px) {
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 16px;
-  }
 `;
 
 export const TableBodyStyled = styled(TableBody)`
@@ -43,12 +38,12 @@ export const TableBodyStyled = styled(TableBody)`
 `;
 
 export const NoData = styled.div`
-  height: 40vh;
+  min-height: 595px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: ${props => props.theme.palette.primary.main};
-  /* 
+
   @media (max-width: 850px) {
     min-height: 880px;
   }
@@ -57,10 +52,30 @@ export const NoData = styled.div`
   }
   @media (max-width: 415px) {
     min-height: 465px;
-  } */
+  }
 `;
 export const NoDataTitle = styled.h2`
   font-size: 24px;
   line-height: 26px;
   color: ${props => props.theme.palette.text.white};
 `;
+
+// Chart Row styles
+
+// export const TableRowStyled = styled(TableRow)`
+//   &:nth-of-type(even) {
+//     background-color: #f1f1f1;
+//   }
+// `;
+
+// export const TableCellStyled = styled(TableCell)`
+//   padding: ${props => props.theme.spacing(2)} ${props => props.theme.spacing(3)};
+
+//   font-size: 14px;
+//   line-height: 17px;
+//   border: none;
+
+//   & a {
+//     color: ${props => props.theme.palette.text.blue};
+//   }
+// `;

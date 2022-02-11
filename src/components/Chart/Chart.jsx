@@ -1,15 +1,15 @@
-import Container from 'components/Container/Container';
-import React, { useEffect } from 'react';
-import Table from '@mui/material/Table';
-import TableContainer from '@mui/material/TableContainer';
-import Paper from '@mui/material/Paper';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import LoaderElement from 'components/LoaderElement/LoaderElement';
 import { useMediaQuery } from 'react-responsive';
-import ChartRow from '../ChartRow/ChartRow';
+import { PAGE_LIMIT } from '../../constants/pageLimit';
 import * as transactionsOperations from '../../redux/transactions/transactions-operations';
 import * as transactionsSelectors from '../../redux/transactions/transactions-selectors';
+import Container from 'components/Container/Container';
+import LoaderElement from 'components/LoaderElement/LoaderElement';
 import PaginationElement from 'components/PaginationElement/PaginationElement';
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableContainer from '@mui/material/TableContainer';
 import {
   Wrapper,
   TableHeadStyled,
@@ -19,45 +19,72 @@ import {
   NoDataTitle,
   TableCellStyled,
 } from './Chart.styled';
+import ChartRow from 'components/ChartRow/ChartRow';
+
+import { setPageOption } from 'redux/transactions/transactions-slice';
 
 export default function Chart() {
   const isMobile = useMediaQuery({
     query: '(max-width: 750px)',
   });
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageItemsLimit] = useState(PAGE_LIMIT);
+
   const dispatch = useDispatch();
-  const currentPage = useSelector(transactionsSelectors.getCurrentPage);
-  const pageItemsLimit = useSelector(transactionsSelectors.getItemsLimit);
-
-  useEffect(() => {
-    // use for Server side pagination
-    // dispatch(transactionsOperations.getTransactions({ page, limit }));
-    dispatch(transactionsOperations.getTransactions());
-  }, [dispatch]);
-
   const transactions = useSelector(transactionsSelectors.getTransactionsData);
+  const transactionsCount = useSelector(
+    transactionsSelectors.getTransactionsCount,
+  );
   const isLoadingData = useSelector(
     transactionsSelectors.isLoadingTransactions,
   );
-
-  const lastTransaction = currentPage * pageItemsLimit;
-  const firstTransaction = lastTransaction - pageItemsLimit;
-  const paginatedTransactions = transactions.slice(
-    firstTransaction,
-    lastTransaction,
+  const filterOption = useSelector(
+    transactionsSelectors.getTransactionsFilterOption,
   );
+  const searchQuery = useSelector(
+    transactionsSelectors.getTransactionsSearchQuery,
+  );
+
+  const handleCurrentPageChange = page => {
+    setCurrentPage(page);
+    dispatch(setPageOption(page));
+  };
+
+  useEffect(() => {
+    if (filterOption === 'blockNumber') {
+      dispatch(
+        transactionsOperations.getTransactionsByBlockNumber({
+          filterOption,
+          searchQuery,
+          currentPage,
+          pageItemsLimit,
+        }),
+      );
+    } else {
+      dispatch(
+        transactionsOperations.getTransactions({ currentPage, pageItemsLimit }),
+      );
+    }
+  }, [currentPage, dispatch, pageItemsLimit]);
 
   return (
     <Wrapper>
       <Container>
         <TableContainer component={Paper}>
           {isLoadingData && <LoaderElement />}
+
           {!isLoadingData && transactions && (
             <Table size="small" aria-label="a dense table">
               <TableHeadStyled>
                 <TableRowStyled>
                   <TableCellStyled>Block number</TableCellStyled>
-                  <TableCellStyled align="right" style={{ minWidth: '165px' }}>
+                  <TableCellStyled
+                    align="right"
+                    style={
+                      isMobile ? { minWidth: '85px' } : { minWidth: '165px' }
+                    }
+                  >
                     Transaction ID
                   </TableCellStyled>
                   <TableCellStyled align="right">
@@ -69,10 +96,20 @@ export default function Chart() {
                   <TableCellStyled align="right">
                     Block confirmations
                   </TableCellStyled>
-                  <TableCellStyled align="right" style={{ minWidth: '130px' }}>
+                  <TableCellStyled
+                    align="right"
+                    style={
+                      isMobile ? { minWidth: '105px' } : { minWidth: '130px' }
+                    }
+                  >
                     Date
                   </TableCellStyled>
-                  <TableCellStyled align="right" style={{ minWidth: '165px' }}>
+                  <TableCellStyled
+                    align="right"
+                    style={
+                      isMobile ? { minWidth: '85px' } : { minWidth: '165px' }
+                    }
+                  >
                     Value
                   </TableCellStyled>
                   <TableCellStyled align="right">
@@ -81,10 +118,10 @@ export default function Chart() {
                 </TableRowStyled>
               </TableHeadStyled>
               <TableBodyStyled>
-                {paginatedTransactions.map((item, index) => (
+                {transactions.map((item, index) => (
                   <ChartRow
                     key={index}
-                    transactions={paginatedTransactions}
+                    transactions={transactions}
                     item={item}
                     isMobile={isMobile}
                   />
@@ -92,14 +129,21 @@ export default function Chart() {
               </TableBodyStyled>
             </Table>
           )}
-          {!isLoadingData && !transactions && (
-            <NoData>
-              <NoDataTitle>No data</NoDataTitle>
-            </NoData>
-          )}
         </TableContainer>
 
-        <PaginationElement isMobile={isMobile} />
+        {!isLoadingData && transactions.length === 0 && (
+          <NoData>
+            <NoDataTitle>No data</NoDataTitle>
+          </NoData>
+        )}
+        {transactionsCount > pageItemsLimit && (
+          <PaginationElement
+            isMobile={isMobile}
+            currentPage={currentPage}
+            pageItemsLimit={pageItemsLimit}
+            handleCurrentPageChange={handleCurrentPageChange}
+          />
+        )}
       </Container>
     </Wrapper>
   );

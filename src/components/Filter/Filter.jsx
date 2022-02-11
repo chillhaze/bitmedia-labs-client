@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Container from 'components/Container/Container';
 import {
   Wrapper,
@@ -13,25 +13,57 @@ import Divider from '@mui/material/Divider';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilterOption } from 'redux/transactions/transactions-slice';
+import {
+  setFilterOption,
+  setSearchQuery as setQuery,
+} from 'redux/transactions/transactions-slice';
+import * as transactionsOperations from '../../redux/transactions/transactions-operations';
+import * as transactionsSelectors from '../../redux/transactions/transactions-selectors';
 
 export default function Filter() {
-  const [filter, setFilter] = useState(
-    useSelector(({ transactions }) => transactions.filterOption),
-  );
+  const [filter, setFilter] = useState('adress');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const defaultValue = 'adress';
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(setFilterOption(filter));
-  }, [dispatch, filter]);
+  const currentPage = useSelector(transactionsSelectors.getCurrentPage);
+  const pageItemsLimit = useSelector(transactionsSelectors.getItemsLimit);
 
-  const handleChange = event => {
-    setFilter(event.target.value);
+  const handleSearchChange = e => {
+    setSearchQuery(e.target.value.trim());
+    dispatch(setQuery(e.target.value.trim()));
   };
 
-  const handleSubmit = event => {
+  const handleFilterOptionChange = e => {
+    setFilter(e.target.value);
+    dispatch(setFilterOption(e.target.value));
+  };
+
+  const handleSubmit = () => {
+    if (filter === 'blockNumber' && searchQuery) {
+      console.log('sent by block #');
+      dispatch(
+        transactionsOperations.getTransactionsByBlockNumber({
+          filter,
+          searchQuery,
+          currentPage,
+          pageItemsLimit,
+        }),
+      );
+    } else if (filter !== 'blockNumber' && searchQuery) {
+      dispatch(
+        transactionsOperations.getTransactionByFilter({
+          filter,
+          searchQuery,
+          currentPage,
+          pageItemsLimit,
+        }),
+      );
+
+      setSearchQuery('');
+    }
+
     return;
   };
 
@@ -41,21 +73,24 @@ export default function Filter() {
         <SearchWrapper>
           <PaperStyled component="form">
             <InputBaseStyled
+              value={searchQuery}
               sx={{ ml: 1, flex: 1 }}
               placeholder="Search..."
               inputProps={{ 'aria-label': 'search' }}
+              onChange={handleSearchChange}
             />
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
 
             <SelectStyled
               variant="standard"
-              onChange={handleChange}
+              onChange={handleFilterOptionChange}
               defaultValue={defaultValue}
               disableUnderline
               IconComponent={KeyboardArrowDownIcon}
+              value={filter}
             >
               <MenuItem value={'adress'}>Adress</MenuItem>
-              <MenuItem value={'id'}>Transaction ID</MenuItem>
+              <MenuItem value={'transactionId'}>Transaction ID</MenuItem>
               <MenuItem value={'blockNumber'}>Block Number</MenuItem>
             </SelectStyled>
           </PaperStyled>
@@ -64,7 +99,7 @@ export default function Filter() {
             type="submit"
             sx={{ p: '10px' }}
             aria-label="search"
-            onSubmit={handleSubmit}
+            onClick={handleSubmit}
           >
             <SearchIcon />
           </ButtonStyled>
