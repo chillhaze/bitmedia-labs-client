@@ -5,7 +5,7 @@ const weiToEtherConvert = value => {
   const wei = hexToDecConvert(value);
   const ether = convert(wei, 'wei');
 
-  return Number(ether.ether).toFixed(14);
+  return Number(ether.ether).toFixed(18);
 };
 
 export default weiToEtherConvert;

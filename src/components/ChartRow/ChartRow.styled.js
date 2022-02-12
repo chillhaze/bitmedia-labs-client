@@ -16,6 +16,8 @@ export const TableCellStyled = styled(TableCell)`
   font-size: 14px;
   line-height: 17px;
   border: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   & a {
     color: ${props => props.theme.palette.text.blue};

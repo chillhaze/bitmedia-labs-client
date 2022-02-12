@@ -1,4 +1,11 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setFilterOption,
+  setSearchQuery as setQuery,
+} from 'redux/transactions/transactions-slice';
+import * as transactionsOperations from '../../redux/transactions/transactions-operations';
+import * as transactionsSelectors from '../../redux/transactions/transactions-selectors';
 import Container from 'components/Container/Container';
 import {
   Wrapper,
@@ -12,13 +19,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  setFilterOption,
-  setSearchQuery as setQuery,
-} from 'redux/transactions/transactions-slice';
-import * as transactionsOperations from '../../redux/transactions/transactions-operations';
-import * as transactionsSelectors from '../../redux/transactions/transactions-selectors';
 
 export default function Filter() {
   const [filter, setFilter] = useState('adress');

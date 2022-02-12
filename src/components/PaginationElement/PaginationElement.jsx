@@ -1,8 +1,8 @@
 import React from 'react';
-import Stack from '@mui/material/Stack';
-import { Wrapper, PaginationStyled } from './PaginationElement.styled';
 import { useSelector } from 'react-redux';
 import * as transactionsSelectors from '../../redux/transactions/transactions-selectors';
+import Stack from '@mui/material/Stack';
+import { Wrapper, PaginationStyled } from './PaginationElement.styled';
 
 export default function PaginationElement({
   isMobile,

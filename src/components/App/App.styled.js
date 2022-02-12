@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Container = styled.div`
-  height: calc(100vh - 228px);
+  /* height: calc(100vh - 228px);
 
   @media (max-width: 750px) {
     height: calc(100vh - 120px);
@@ -19,5 +19,5 @@ export const Container = styled.div`
 
   @media (max-width: 376px) {
     height: calc(100vh + 120px);
-  }
+  } */
 `;

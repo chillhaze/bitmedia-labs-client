@@ -13,6 +13,7 @@ export const TableHeadStyled = styled(TableHead)`
 export const TableRowStyled = styled(TableRow)`
   & th {
     color: ${props => props.theme.palette.text.white};
+    min-width: 50px;
   }
 `;
 

@@ -1,7 +1,8 @@
-import Container from 'components/Container/Container';
 import React from 'react';
-import { Wrapper } from './Header.styled';
+import Container from 'components/Container/Container';
 import Logo from '../Logo/Logo';
+import { Wrapper } from './Header.styled';
+
 export default function Header() {
   return (
     <Wrapper>

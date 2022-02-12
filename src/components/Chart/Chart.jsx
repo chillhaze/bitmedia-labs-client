@@ -4,7 +4,9 @@ import { useMediaQuery } from 'react-responsive';
 import { PAGE_LIMIT } from '../../constants/pageLimit';
 import * as transactionsOperations from '../../redux/transactions/transactions-operations';
 import * as transactionsSelectors from '../../redux/transactions/transactions-selectors';
+import { setPageOption } from 'redux/transactions/transactions-slice';
 import Container from 'components/Container/Container';
+import ChartRow from 'components/ChartRow/ChartRow';
 import LoaderElement from 'components/LoaderElement/LoaderElement';
 import PaginationElement from 'components/PaginationElement/PaginationElement';
 import Paper from '@mui/material/Paper';
@@ -19,9 +21,6 @@ import {
   NoDataTitle,
   TableCellStyled,
 } from './Chart.styled';
-import ChartRow from 'components/ChartRow/ChartRow';
-
-import { setPageOption } from 'redux/transactions/transactions-slice';
 
 export default function Chart() {
   const isMobile = useMediaQuery({
@@ -107,7 +106,7 @@ export default function Chart() {
                   <TableCellStyled
                     align="right"
                     style={
-                      isMobile ? { minWidth: '85px' } : { minWidth: '165px' }
+                      isMobile ? { minWidth: '85px' } : { minWidth: '240px' }
                     }
                   >
                     Value
@@ -119,12 +118,7 @@ export default function Chart() {
               </TableHeadStyled>
               <TableBodyStyled>
                 {transactions.map((item, index) => (
-                  <ChartRow
-                    key={index}
-                    transactions={transactions}
-                    item={item}
-                    isMobile={isMobile}
-                  />
+                  <ChartRow key={index} item={item} />
                 ))}
               </TableBodyStyled>
             </Table>

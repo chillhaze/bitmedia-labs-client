@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-// axios.defaults.baseURL = 'https://bitmedia-lab.herokuapp.com/api';
-axios.defaults.baseURL = 'http://localhost:3000/api';
+axios.defaults.baseURL = 'https://bitmedia-lab.herokuapp.com/api';
+// axios.defaults.baseURL = 'http://localhost:3005/api';
 
 // use for Server side pagination
 export const getTransactions = createAsyncThunk(

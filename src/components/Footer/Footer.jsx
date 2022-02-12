@@ -1,6 +1,6 @@
+import React from 'react';
 import Container from 'components/Container/Container';
 import Logo from 'components/Logo/Logo';
-import React from 'react';
 import { Wrapper, TextWrapper, AllRights, Copyright } from './Footer.styled';
 
 export default function Footer() {
