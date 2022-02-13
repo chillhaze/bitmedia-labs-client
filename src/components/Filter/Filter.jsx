@@ -80,6 +80,7 @@ export default function Filter() {
               placeholder="Search..."
               inputProps={{ 'aria-label': 'search' }}
               onChange={handleSearchChange}
+              required
             />
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
 
