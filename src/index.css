@@ -50,7 +50,6 @@ img {
 
 body {
   margin: 0 auto;
-  max-width: 1440px;
 
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
@@ -58,7 +57,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: #e5e5e5;
+  background-color: #fff;
 }
 
 code {

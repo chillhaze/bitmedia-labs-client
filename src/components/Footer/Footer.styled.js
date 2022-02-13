@@ -1,14 +1,24 @@
 import styled from '@emotion/styled';
 
 export const Wrapper = styled.div`
-  margin-top: ${props => props.theme.spacing(12)};
+  /* margin-top: ${props => props.theme.spacing(12)}; */
   background-color: ${props => props.theme.palette.secondary.main};
-  /* 
+
   position: fixed;
   bottom: 0;
+  left: 0;
+  right: 0;
 
-  width: 100%;
-  max-width: 1440px; */
+  width: 100vw;
+
+  @media (max-width: 750px) {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    width: 100vw;
+  }
 `;
 export const TextWrapper = styled.div`
   padding: 14px 0;
@@ -19,6 +29,11 @@ export const TextWrapper = styled.div`
   & a {
     font-size: 24px;
     line-height: 29px;
+
+    @media (min-width: 750px) {
+      width: 148px;
+      display: block;
+    }
   }
 
   @media (max-width: 750px) {
@@ -35,6 +50,7 @@ export const TextWrapper = styled.div`
 `;
 
 export const AllRights = styled.p`
+  /* padding-left: 30px; */
   font-size: 16px;
   line-height: 29px;
   font-weight: 300;

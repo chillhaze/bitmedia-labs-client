@@ -40,9 +40,10 @@ export default function Filter() {
     dispatch(setFilterOption(e.target.value));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = e => {
+    e.preventDefault();
+
     if (filter === 'blockNumber' && searchQuery) {
-      console.log('sent by block #');
       dispatch(
         transactionsOperations.getTransactionsByBlockNumber({
           filter,
@@ -70,8 +71,8 @@ export default function Filter() {
   return (
     <Wrapper>
       <Container>
-        <SearchWrapper>
-          <PaperStyled component="form">
+        <PaperStyled component="form" onSubmit={e => handleSubmit(e)}>
+          <SearchWrapper>
             <InputBaseStyled
               value={searchQuery}
               sx={{ ml: 1, flex: 1 }}
@@ -83,27 +84,21 @@ export default function Filter() {
 
             <SelectStyled
               variant="standard"
-              onChange={handleFilterOptionChange}
               defaultValue={defaultValue}
               disableUnderline
               IconComponent={KeyboardArrowDownIcon}
               value={filter}
+              onChange={handleFilterOptionChange}
             >
               <MenuItem value={'adress'}>Adress</MenuItem>
               <MenuItem value={'transactionId'}>Transaction ID</MenuItem>
               <MenuItem value={'blockNumber'}>Block Number</MenuItem>
             </SelectStyled>
-          </PaperStyled>
-
-          <ButtonStyled
-            type="submit"
-            sx={{ p: '10px' }}
-            aria-label="search"
-            onClick={handleSubmit}
-          >
+          </SearchWrapper>
+          <ButtonStyled type="submit" sx={{ p: '10px' }} aria-label="search">
             <SearchIcon />
           </ButtonStyled>
-        </SearchWrapper>
+        </PaperStyled>
       </Container>
     </Wrapper>
   );

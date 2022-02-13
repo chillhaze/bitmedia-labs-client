@@ -130,14 +130,13 @@ export default function Chart() {
             <NoDataTitle>No data</NoDataTitle>
           </NoData>
         )}
-        {transactionsCount > pageItemsLimit && (
-          <PaginationElement
-            isMobile={isMobile}
-            currentPage={currentPage}
-            pageItemsLimit={pageItemsLimit}
-            handleCurrentPageChange={handleCurrentPageChange}
-          />
-        )}
+
+        <PaginationElement
+          isMobile={isMobile}
+          currentPage={currentPage}
+          pageItemsLimit={pageItemsLimit}
+          handleCurrentPageChange={handleCurrentPageChange}
+        />
       </Container>
     </Wrapper>
   );

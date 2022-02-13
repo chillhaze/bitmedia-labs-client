@@ -4,7 +4,9 @@ import TableRow from '@mui/material/TableRow';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div`
+  margin-bottom: ${props => props.theme.spacing(12)};
+`;
 
 export const TableHeadStyled = styled(TableHead)`
   background-color: ${props => props.theme.palette.primary.main};
@@ -44,7 +46,7 @@ export const TableBodyStyled = styled(TableBody)`
 `;
 
 export const NoData = styled.div`
-  height: 40vh;
+  height: 462px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -5,28 +5,31 @@ import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
 
 export const Wrapper = styled.div`
-  margin-top: ${props => props.theme.spacing(15)};
+  margin-top: ${props => props.theme.spacing(14)};
   margin-bottom: ${props => props.theme.spacing(4)};
   color: ${props => props.theme.palette.text.black};
 `;
 
 export const PaperStyled = styled(Paper)`
+  display: flex;
+  box-shadow: none;
+
+  @media (max-width: 750px) {
+    flex-direction: column;
+  }
+
+  /* position: relative; */
+`;
+
+export const SearchWrapper = styled.div`
   padding: 2px 4px;
   padding: ${props => props.theme.spacing(2)} ${props => props.theme.spacing(4)};
   max-width: 500px;
   display: flex;
   align-items: center;
-  box-shadow: none;
+
   border: 1px solid ${props => props.theme.palette.text.grey};
   border-radius: 10px;
-`;
-
-export const SearchWrapper = styled.div`
-  display: flex;
-
-  @media (max-width: 750px) {
-    flex-direction: column;
-  }
 `;
 
 export const InputBaseStyled = styled(InputBase)`
@@ -61,6 +64,10 @@ export const ButtonStyled = styled(Button)`
   border-radius: 8px;
   border: 1px solid transparent;
 
+  /* position: absolute;
+  top: 0;
+  right: -65px; */
+
   & svg {
     fill: ${props => props.theme.palette.text.white};
   }
@@ -77,5 +84,6 @@ export const ButtonStyled = styled(Button)`
   @media (max-width: 750px) {
     margin-left: 0;
     margin-top: ${props => props.theme.spacing(3)};
+    position: relative;
   }
 `;

@@ -43,7 +43,7 @@ export const transactionsSlice = createSlice({
       state.isLoadingTransactions = false;
     },
     //------------------ Get Transactions Data by Search
-    [transactionsOperations.getTransactions.pending](state, _) {
+    [transactionsOperations.getTransactionByFilter.pending](state, _) {
       state.isLoadingTransactions = true;
     },
     [transactionsOperations.getTransactionByFilter.fulfilled](state, action) {

@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 
-export const Main = styled.main``;
-
-export const Wrapper = styled.div`
-  background-color: ${props => props.theme.palette.primary.mainBg};
+export const Main = styled.main`
+  /* background-color: ${props => props.theme.palette.primary.mainBg}; */
 `;
+
+export const Wrapper = styled.div``;
 
 export const Container = styled.div`
   /* height: calc(100vh - 228px);
