@@ -74,6 +74,7 @@ export default function Filter() {
         <PaperStyled component="form" onSubmit={e => handleSubmit(e)}>
           <SearchWrapper>
             <InputBaseStyled
+              autoComplete={true}
               value={searchQuery}
               sx={{ ml: 1, flex: 1 }}
               placeholder="Search..."
